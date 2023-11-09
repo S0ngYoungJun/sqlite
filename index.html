@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+ <h1>Items</h1>
+ <form action="/addItem" method="POST">
+ <input type="text" name="name" placeholder="Item name">
+  <button type="submit">저장보내기</button>
+  </form>
+   <div id="itemList"></div>
+   <button id="viewButton">View Items</button>
+   <script>
+    document.getElementById('viewButton').addEventListener('click', () => {
+      fetch('/getItems')
+        .then(response => response.json())
+        .then(data => {
+          const itemList = document.getElementById('itemList');
+          data.forEach(item => {
+            itemList.innerHTML += `<p>${item.name}</p>`;
+          });
+        });
+    });
+  </script>
+</body>
+</html>
