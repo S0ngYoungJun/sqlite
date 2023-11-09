@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <form action="/add" method="post">
+    <label for="name">이름:</label>
+    <input type="text" id="name" name="name" required>
+    <br>
+    <label for="age">나이:</label>
+    <input type="number" id="age" name="age" required>
+    <br>
+    <input type="submit" value="추가">
+</form>
+
+<h2>데이터베이스 내용</h2>
+<div id="data"></div>
+<button onclick="loadData()">데이터 업데이트</button>
+
+<script>
+  function loadData() {
+      // 서버에서 데이터 가져오는 AJAX 요청
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "/data", true);
+      xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+              var data = JSON.parse(xhr.responseText);
+              var dataDiv = document.getElementById("data");
+              dataDiv.innerHTML = "데이터베이스 내용:<br>";
+              data.forEach(function(item) {
+                  dataDiv.innerHTML += "ID: " + item.id + ", 이름: " + item.name + ", 나이: " + item.age + "<br>";
+              });
+          }
+      };
+      xhr.send();
+  }
+</script>
+</body>
+
+</html>
